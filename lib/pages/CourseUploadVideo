@@ -1,0 +1,266 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: CourseCreateUpload(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
+
+class CourseCreateUpload extends StatefulWidget {
+  @override
+  _CourseCreateUploadState createState() => _CourseCreateUploadState();
+}
+
+class _CourseCreateUploadState extends State<CourseCreateUpload> {
+  // Variables to track button states
+  bool isUploadVideoPressed = false;
+  bool isAddTagsPressed = false;
+  bool isUploadVideoAgainPressed = false;
+
+  // Function to handle button press
+  void _onButtonPressed(String buttonType) {
+    setState(() {
+      switch (buttonType) {
+        case 'uploadVideo':
+          isUploadVideoPressed = true;
+          break;
+        case 'addTags':
+          isAddTagsPressed = true;
+          break;
+        case 'uploadVideoAgain':
+          isUploadVideoAgainPressed = true;
+          break;
+      }
+    });
+
+    // Simulate a button release after a short delay
+    Future.delayed(Duration(milliseconds: 200), () {
+      setState(() {
+        switch (buttonType) {
+          case 'uploadVideo':
+            isUploadVideoPressed = false;
+            break;
+          case 'addTags':
+            isAddTagsPressed = false;
+            break;
+          case 'uploadVideoAgain':
+            isUploadVideoAgainPressed = false;
+            break;
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Scaffold(
+        backgroundColor: Color(0xFFEEECF6), // Background color
+        body: Center(
+          child: Column( // Use Column to stack container and text
+            mainAxisAlignment: MainAxisAlignment.center, // Center items vertically
+            children: [
+              Container(
+                margin: const EdgeInsets.all(20), // Margin around the container
+                decoration: BoxDecoration(
+                  color: Colors.white, // White background for the container
+                  borderRadius: BorderRadius.circular(10), // Rounded corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12, // Light shadow
+                      blurRadius: 10,
+                      offset: Offset(0, 5), // Offset for the shadow
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0), // Padding inside the container
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
+                    children: [
+                      // Title section with icon
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.upload_file, // Upload icon
+                            color: Color(0xFF333333), // Color for the icon
+                          ),
+                          SizedBox(width: 8), // Space between icon and text
+                          Text(
+                            'Course _name',
+                            style: TextStyle(
+                              color: Color(0xFF333333), // Color for the title text
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20), // Space below the title
+
+                      // Course Title TextField
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Course Title',
+                          labelStyle: TextStyle(color: Color(0xFF9E9E9E)), // Placeholder color
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8), // Rounded corners for the textbox
+                            borderSide: BorderSide(color: Color(0xFFA99BFF)), // Border color
+                          ),
+                          contentPadding: EdgeInsets.fromLTRB(12, 20, 12, 10), // Padding to position label
+                        ),
+                      ),
+                      SizedBox(height: 20), // Space between text fields
+
+                      // Description TextField
+                      TextField(
+                        maxLines: 4, // Allow multiple lines for the description
+                        decoration: InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(color: Color(0xFF9E9E9E)), // Placeholder color
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8), // Rounded corners for the textbox
+                            borderSide: BorderSide(color: Color(0xFFA99BFF)), // Border color
+                          ),
+                          contentPadding: EdgeInsets.fromLTRB(12, 20, 12, 10), // Padding to position label
+                        ),
+                      ),
+                      SizedBox(height: 20), // Space between text fields
+
+                      // Upload Video Button
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click, // Change cursor to click cursor
+                        child: GestureDetector(
+                          onTap: () {
+                            _onButtonPressed('uploadVideo'); // Handle button press
+                          },
+                          child: Container(
+                            width: double.infinity, // Make button full width
+                            decoration: BoxDecoration(
+                              border: Border.all(color: isUploadVideoPressed ? Color(0xFFA99BFF) : Color(0xFF2810BF)), // Border color
+                              borderRadius: BorderRadius.circular(8), // Rounded corners
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10), // Padding for the button
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min, // Button width adjusts to content
+                              mainAxisAlignment: MainAxisAlignment.center, // Center the button content
+                              children: [
+                                Icon(
+                                  Icons.video_library, // Icon representing adding videos
+                                  color: Color(0xFF2810BF), // Color for the icon
+                                ),
+                                SizedBox(width: 8), // Space between icon and text
+                                Text(
+                                  'Add Video',
+                                  style: TextStyle(
+                                    color: Color(0xFF2810BF), // Color for the text
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20), // Space between buttons
+
+                      // Row for Add Tags and Upload Video buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between buttons
+                        children: [
+                          // Add Tags Button
+                          Expanded(
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click, // Change cursor to click cursor
+                              child: GestureDetector(
+                                onTap: () {
+                                  _onButtonPressed('addTags'); // Handle button press
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 10), // Space between buttons
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: isAddTagsPressed ? Color(0xFFA99BFF) : Color(0xFF2810BF)), // Border color
+                                    borderRadius: BorderRadius.circular(8), // Rounded corners
+                                  ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10), // Padding for the button
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Button width adjusts to content
+                                    mainAxisAlignment: MainAxisAlignment.center, // Center the button content
+                                    children: [
+                                      Icon(
+                                        Icons.label, // Icon representing adding tags
+                                        color: Color(0xFF2810BF), // Color for the icon
+                                      ),
+                                      SizedBox(width: 8), // Space between icon and text
+                                      Text(
+                                        'Add Tags',
+                                        style: TextStyle(
+                                          color: Color(0xFF2810BF), // Color for the text
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Upload Video Button
+                          Expanded(
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click, // Change cursor to click cursor
+                              child: GestureDetector(
+                                onTap: () {
+                                  _onButtonPressed('uploadVideoAgain'); // Handle button press
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 10), // Space between buttons
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: isUploadVideoAgainPressed ? Color(0xFFA99BFF) : Color(0xFF2810BF)), // Border color
+                                    borderRadius: BorderRadius.circular(8), // Rounded corners
+                                  ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10), // Padding for the button
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Button width adjusts to content
+                                    mainAxisAlignment: MainAxisAlignment.center, // Center the button content
+                                    children: [
+                                      Icon(
+                                        Icons.upload, // Icon representing uploading video
+                                        color: Color(0xFF2810BF), // Color for the icon
+                                      ),
+                                      SizedBox(width: 8), // Space between icon and text
+                                      Text(
+                                        'Update Course',
+                                        style: TextStyle(
+                                          color: Color(0xFF2810BF), // Color for the text
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Version text below the container
+              SizedBox(height: 20), // Space between container and version text
+              Text(
+                'v0.1 (Beta)',
+                style: TextStyle(
+                  color: Colors.grey, // Color for the version text
+                  fontWeight: FontWeight.w300, // Thin text
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
